@@ -21,7 +21,7 @@ $email = $conn->real_escape_string($_POST['email']);
 $contrasena_ingresada = $_POST['contrasena'];
 
 // Consulta la base de datos para encontrar al usuario por username y email
-$sql = "SELECT id_usuario, username, contrasena FROM usuarios WHERE username = '$username' AND email = '$email'";
+$sql = "SELECT id_usuario, username, contrasena, rol FROM usuarios WHERE username = '$username' AND email = '$email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -33,18 +33,20 @@ if ($result->num_rows > 0) {
         // Contraseña correcta, inicia la sesión
         $_SESSION['id_usuario'] = $row['id_usuario'];
         $_SESSION['username'] = $row['username'];
+        $_SESSION['rol'] = $row['rol'];
+
         
         // Redirige al usuario a la página de bienvenida (o dashboard)
-        header("Location: dashboard.php");
+        header("Location: ../dashboard.php");
         exit();
     } else {
         // Contraseña incorrecta
-        header("Location: index.php?error=1");
+        header("Location: ../index.php?error=1");
         exit();
     }
 } else {
     // Usuario o email no encontrado
-    header("Location: index.php?error=1");
+    header("Location: ../index.php?error=1");
     exit();
 }
 

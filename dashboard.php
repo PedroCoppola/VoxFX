@@ -33,7 +33,7 @@ if ($rol == 'operador' || $rol == 'jefe') {
 <head>
   <meta charset="UTF-8">
   <title>Dashboard - Jefe de Operadores</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style_dashboard.css">
 </head>
 <body>
 
@@ -62,8 +62,8 @@ if ($rol == 'operador' || $rol == 'jefe') {
   <div class="main-panel">
     <!-- Tabs -->
     <div class="tabs">
-      <div class="tab active" data-tab="institucionales">Sonidos Institucionales</div>
-      <div class="tab" data-tab="programa">Sonidos del Programa</div>
+      <div class="tab" data-tab="institucionales">Sonidos Institucionales</div>
+      <div class="tab active  " data-tab="programa">Sonidos del Programa</div>
       <div class="tab" data-tab="personales">Mis Sonidos</div>
     </div>
 
@@ -72,6 +72,7 @@ if ($rol == 'operador' || $rol == 'jefe') {
       <form method="get" action="dashboard.php">
         <select name="programa" class="dropdown" onchange="this.form.submit()">
           <option value="">Seleccionar programa</option>
+
           <?php foreach ($programas as $p): ?>
             <option value="<?php echo $p['id_programa']; ?>"
               <?php if (isset($_GET['programa']) && $_GET['programa']==$p['id_programa']) echo 'selected'; ?>>
@@ -79,8 +80,11 @@ if ($rol == 'operador' || $rol == 'jefe') {
             </option>
           <?php endforeach; ?>
         </select>
-      </form>
+      </form>       <br> <hr>
+
     </div>
+           
+
 
     <!-- Grid sonidos -->
     <div class="sound-grid" id="sonidos">
@@ -116,7 +120,7 @@ if ($rol == 'operador' || $rol == 'jefe') {
 </div>
 
 <script>
-  // manejar tabs
+  // manejar tabs con redirección
   const tabs = document.querySelectorAll('.tab');
   tabs.forEach(t => {
     t.addEventListener('click', () => {
@@ -125,8 +129,19 @@ if ($rol == 'operador' || $rol == 'jefe') {
     });
   });
 
-  // mostrar dropdown solo en pestaña programa
+  // obtener pestaña activa desde PHP
   const activeTab = "<?php echo $tab; ?>";
+
+  // asignar clase 'active'
+  tabs.forEach(t => {
+    if (t.getAttribute('data-tab') === activeTab) {
+      t.classList.add('active');
+    } else {
+      t.classList.remove('active');
+    }
+  });
+
+  // mostrar dropdown solo si la pestaña es 'programa'
   if (activeTab === 'programa') {
     document.getElementById('programa-bar').style.display = 'flex';
   }

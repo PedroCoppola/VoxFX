@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+@font-face {
+    font-family: 'Bicubik Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Bicubik Regular'), url('../fonts/Bicubik.woff') format('woff');
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    background-color: radial-gradient(135deg, #1a1a1a, #000);
+}
+
+
+
+.logo {
+    width: 100%;
+    padding: 1% 0% 0% 0%;
+    background: linear-gradient(to right, #8e44ad, #3498db);
+    text-align: center;
+}
+
+form {
+    background: #1e1e1e;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    padding: 2%;
+    border: 1px solid #333;
+    width: 30%;
+    height: 50%;
+}
+
+h2 {
+    font-size: 2em;
+    margin: 1em;
+    color: #fff;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 15px;
+    background: #2b2b2b;
+    border: 1px solid #444;
+
+    border-radius: 40px;
+    color: #fff;
+
+    font-size: 1em;
+
+    box-sizing: border-box;
+
+}
+
+
+
+input::placeholder {
+
+    color: #888;
+
+}
+
+
+
+.login-btn {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 40px;
+
+    background: linear-gradient(to right, #8e44ad, #3498db);
+
+    color: #fff;
+
+    font-size: 1em;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: background 0.3s ease;
+
+}
+
+
+
+.login-btn:hover {
+
+    background: linear-gradient(to right, #9b59b6, #5dade2);
+
+}
+
+
+
+.error-msg {
+
+    color: #e74c3c;
+
+    margin-top: 15px;
+
+    font-size: 0.9em;
+
+}
