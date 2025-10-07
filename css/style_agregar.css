@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+@font-face {
+    font-family: 'Bicubik Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Bicubik Regular'), url('../fonts/Bicubik.woff') format('woff');
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #000;
+    color: #fff;
+
+    text-align: center;
+    margin: 0;
+    background-color: radial-gradient(135deg, #1a1a1a, #000);
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1%;
+  background: linear-gradient(to right, #8e44ad, #3498db);
+}
+
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info span {
+  font-weight: 500;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+/* PANEL PRINCIPAL */
+.main-panel {
+  flex: 1;
+  background: #1e1e1e;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 850px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* INPUTS */
+input[type="text"],
+select,
+label.dropdown {
+  background: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 40px;
+  padding: 12px 20px;
+  color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: border 0.2s;
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border: 1px solid #8e44ad;
+}
+
+/* GRID DE SONIDOS */
+.sound-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.sound-btn {
+  background: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 40px;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.sound-btn:hover {
+  background: #333;
+  transform: scale(1.05);
+}
+
+.sound-btn span {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+/* BOTONES PRINCIPALES — estilo píldora */
+button,
+a button {
+  border: none;
+  border-radius: 40px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  padding: 15px 35px;
+  transition: all 0.25s ease;
+  font-size: 1em;
+}
+
+.add-btn {
+  background: linear-gradient(to right, #9b59b6, #3498db);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.add-btn:hover {
+  background: linear-gradient(to right, #ae64c4, #5dade2);
+  transform: scale(1.05);
+}
+
+.edit-btn {
+  background: linear-gradient(to right, #2980b9, #6dd5fa);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.edit-btn:hover {
+  background: linear-gradient(to right, #3a9ad9, #92eaff);
+  transform: scale(1.05);
+}
+
+.delete-btn {
+  background: linear-gradient(to right, #ff512f, #dd2476);
+  box-shadow: 0 4px 15px rgba(255, 81, 47, 0.4);
+}
+
+.delete-btn:hover {
+  background: linear-gradient(to right, #ff6b47, #f43b8d);
+  transform: scale(1.05);
+}
+
+/* BOTONES DE FORMULARIO AGREGAR */
+.btn-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.btn-cancelar {
+  background: linear-gradient(to right, #555, #333);
+  border-radius: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-cancelar:hover {
+  background: linear-gradient(to right, #666, #444);
+}
+
+.btn-crear {
+  background: linear-gradient(to right, #3498db, #e056fd);
+  border-radius: 40px;
+  box-shadow: 0 4px 15px rgba(224, 86, 253, 0.4);
+}
+
+.btn-crear:hover {
+  background: linear-gradient(to right, #5dade2, #f178ff);
+  transform: scale(1.05);
+}
+
+/* TEXTOS Y TÍTULOS */
+h2 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #444;
+  width: 100%;
+  margin-bottom: 20px;
+}
