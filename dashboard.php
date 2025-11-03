@@ -63,52 +63,55 @@ if ($rol == 'operador' || $rol == 'jefe') {
     <!-- Tabs -->
     <div class="tabs">
       <div class="tab" data-tab="institucionales">Sonidos Institucionales</div>
-      <div class="tab active  " data-tab="programa">Sonidos del Programa</div>
+      <div class="tab active" data-tab="programa">Sonidos del Programa</div>
       <div class="tab" data-tab="personales">Mis Sonidos</div>
     </div>
 
     <!-- Barra superior -->
     <div class="top-bar" id="programa-bar" style="display:none;">
-      <form method="get" action="dashboard.php">
-        <select name="programa" class="dropdown" onchange="this.form.submit()">
-          <option value="">Seleccionar programa</option>
+<form method="get" action="dashboard.php">
+  <input type="hidden" name="tab" value="programa">
+  <select name="programa" class="dropdown" onchange="this.form.submit()">
+    <option value="">Seleccionar programa</option>
 
-          <?php foreach ($programas as $p): ?>
-            <option value="<?php echo $p['id_programa']; ?>"
-              <?php if (isset($_GET['programa']) && $_GET['programa']==$p['id_programa']) echo 'selected'; ?>>
-              <?php echo htmlspecialchars($p['nombre_programa']); ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
-      </form>       <br> <hr>
+    <?php foreach ($programas as $p): ?>
+      <option value="<?php echo $p['id_programa']; ?>"
+        <?php if (isset($_GET['programa']) && $_GET['programa']==$p['id_programa']) echo 'selected'; ?>>
+        <?php echo htmlspecialchars($p['nombre_programa']); ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</form>
+      <br> <hr>
 
     </div>
            
 
 
     <!-- Grid sonidos -->
-    <div class="sound-grid" id="sonidos">
+  <div class="sound-grid" id="sonidos">
       <?php
       $tab = $_GET['tab'] ?? 'institucionales';
 
       if ($tab == 'institucionales') {
           $sql = "SELECT * FROM sonidos WHERE tipo='institucional'";
-          $result = $conn->query($sql);
       } elseif ($tab == 'programa' && isset($_GET['programa'])) {
           $id_programa = intval($_GET['programa']);
           $sql = "SELECT s.* FROM sonidos s
                   INNER JOIN programas_sonidos ps ON s.id_sonido = ps.id_sonido
                   WHERE ps.id_programa = $id_programa";
-          $result = $conn->query($sql);
       } else {
           $sql = "SELECT * FROM sonidos WHERE tipo='personal' AND propietario=$id_usuario";
-          $result = $conn->query($sql);
       }
+
+      $result = $conn->query($sql);
 
       if ($result && $result->num_rows > 0) {
           while ($s = $result->fetch_assoc()) {
-              echo "<div class='sound-btn'>
-                      <span>🎵</span>".htmlspecialchars($s['nombre'])."
+              $nombre = htmlspecialchars($s['nombre']);
+              $url = htmlspecialchars($s['url']);
+              echo "<div class='sound-btn' data-sound='$url'>
+                      <span>🎵</span>$nombre
                     </div>";
           }
       } else {
@@ -145,6 +148,34 @@ if ($rol == 'operador' || $rol == 'jefe') {
   if (activeTab === 'programa') {
     document.getElementById('programa-bar').style.display = 'flex';
   }
+
+  // ========================
+  // 🎧 REPRODUCCIÓN DE SONIDOS
+  // ========================
+  let currentAudio = null;
+
+  document.querySelectorAll('.sound-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const soundPath = btn.dataset.sound;
+
+      if (!soundPath) return;
+
+      // si hay un audio sonando, lo detiene
+      if (currentAudio && !currentAudio.paused) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        // si el mismo botón se clickea de nuevo, no arranca otro
+        if (currentAudio.src.includes(soundPath)) {
+          currentAudio = null;
+          return;
+        }
+      }
+
+      // crear nuevo audio
+      currentAudio = new Audio(soundPath);
+      currentAudio.play().catch(err => console.error("Error al reproducir:", err));
+    });
+  });
 </script>
 
 </body>
