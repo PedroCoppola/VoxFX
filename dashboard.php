@@ -1,17 +1,19 @@
 <?php
 session_start();
+include("php/conexion.php");
+
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: index.php");
     exit();
 }
 
-include("php/conexion.php"); // archivo donde conectás la BD
-
 $id_usuario = $_SESSION['id_usuario'];
 $username   = $_SESSION['username'];
 $rol        = $_SESSION['rol'];
 
-// obtener programas asignados si es operador o jefe
+// ===========================
+// 🎚️ OBTENER PROGRAMAS ASIGNADOS (solo jefe y operador)
+// ===========================
 $programas = [];
 if ($rol == 'operador' || $rol == 'jefe') {
     $sql = "SELECT p.id_programa, p.nombre_programa 
@@ -26,20 +28,36 @@ if ($rol == 'operador' || $rol == 'jefe') {
         $programas[] = $row;
     }
 }
+
+// ===========================
+// 🧭 PESTAÑA ACTIVA
+// ===========================
+$tab = $_GET['tab'] ?? 'institucionales';
+$selectedPrograma = $_GET['programa'] ?? null;
+
+if ($tab === 'programa') {
+    if (!$selectedPrograma) {
+        if (!empty($programas)) {
+            $selectedPrograma = $programas[0]['id_programa']; // toma el primero asignado
+        } else {
+            $selectedPrograma = null;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard - Jefe de Operadores</title>
+  <title>Dashboard - VoxFX</title>
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/style_dashboard.css">
 </head>
 <body>
 
 <header>
-  <div class="menu-icon">≡</div>
-  <div class="logo">FM PIXEL</div>
+  <div class="logo">VoxFX</div>
   <div class="user-info">
     <span><?php echo htmlspecialchars($username); ?></span>
     <small><?php echo ucfirst($rol); ?></small>
@@ -48,74 +66,109 @@ if ($rol == 'operador' || $rol == 'jefe') {
 </header>
 
 <div class="container">
-  <!-- Sidebar -->
+  <!-- ===========================
+       📋 SIDEBAR
+  ============================ -->
   <div class="sidebar">
-    <a href="agregar.php"><button class="add-btn">Agregar sonido</button></a>
-    <button class="edit-btn">Editar sonido</button>
-    <button class="delete-btn">Eliminar sonido</button>
+    <?php if ($rol !== 'productor'): ?>
+      <a href="agregar.php"><button class="add-btn">Agregar sonido</button></a>
+    <?php endif; ?>
+
     <?php if ($rol == 'jefe'): ?>
       <a href="usuarios.php"><button class="manage-btn">Gestionar usuarios</button></a>
+      <a href="programas.php"><button class="add-btn">Gestionar programas</button></a>
+      <a href="asignar_programas.php"><button class="edit-btn">Asignar programas</button></a>
     <?php endif; ?>
+
+    <hr>
+    <a href="cambiar_contrasena.php"><button class="edit-btn">Cambiar contraseña</button></a>
+    <a href="logout.php"><button class="delete-btn">Cerrar sesión</button></a>
   </div>
 
-  <!-- Panel principal -->
+  <!-- ===========================
+       🎚️ PANEL PRINCIPAL
+  ============================ -->
   <div class="main-panel">
-    <!-- Tabs -->
     <div class="tabs">
-      <div class="tab" data-tab="institucionales">Sonidos Institucionales</div>
-      <div class="tab active" data-tab="programa">Sonidos del Programa</div>
-      <div class="tab" data-tab="personales">Mis Sonidos</div>
+      <div class="tab <?php if ($tab=='institucionales') echo 'active'; ?>" data-tab="institucionales">Sonidos Institucionales</div>
+
+      <?php if ($rol !== 'productor'): ?>
+        <div class="tab <?php if ($tab=='programa') echo 'active'; ?>" data-tab="programa">Sonidos del Programa</div>
+        <div class="tab <?php if ($tab=='personales') echo 'active'; ?>" data-tab="personales">Mis Sonidos</div>
+      <?php endif; ?>
     </div>
 
-    <!-- Barra superior -->
+    <!-- ===========================
+         🎧 TOP BAR
+    ============================ -->
     <div class="top-bar" id="programa-bar" style="display:none;">
-<form method="get" action="dashboard.php">
-  <input type="hidden" name="tab" value="programa">
-  <select name="programa" class="dropdown" onchange="this.form.submit()">
-    <option value="">Seleccionar programa</option>
-
-    <?php foreach ($programas as $p): ?>
-      <option value="<?php echo $p['id_programa']; ?>"
-        <?php if (isset($_GET['programa']) && $_GET['programa']==$p['id_programa']) echo 'selected'; ?>>
-        <?php echo htmlspecialchars($p['nombre_programa']); ?>
-      </option>
-    <?php endforeach; ?>
-  </select>
-</form>
-      <br> <hr>
-
+      <?php if ($rol !== 'productor' && !empty($programas)): ?>
+      <form method="get" action="dashboard.php">
+        <input type="hidden" name="tab" value="programa">
+        <select name="programa" class="dropdown" onchange="this.form.submit()">
+          <?php foreach ($programas as $p): ?>
+            <option value="<?php echo $p['id_programa']; ?>"
+              <?php if ($selectedPrograma == $p['id_programa']) echo 'selected'; ?>>
+              <?php echo htmlspecialchars($p['nombre_programa']); ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </form>
+      <?php endif; ?>
+      <br><hr>
     </div>
-           
 
-
-    <!-- Grid sonidos -->
-  <div class="sound-grid" id="sonidos">
+    <!-- ===========================
+         🔊 GRID DE SONIDOS
+    ============================ -->
+    <div class="sound-grid" id="sonidos">
       <?php
-      $tab = $_GET['tab'] ?? 'institucionales';
-
       if ($tab == 'institucionales') {
           $sql = "SELECT * FROM sonidos WHERE tipo='institucional'";
-      } elseif ($tab == 'programa' && isset($_GET['programa'])) {
-          $id_programa = intval($_GET['programa']);
-          $sql = "SELECT s.* FROM sonidos s
-                  INNER JOIN programas_sonidos ps ON s.id_sonido = ps.id_sonido
-                  WHERE ps.id_programa = $id_programa";
-      } else {
+      } elseif ($tab == 'programa' && $rol !== 'productor') {
+          if ($selectedPrograma) {
+              $sql = "SELECT s.* FROM sonidos s
+                      INNER JOIN programas_sonidos ps ON s.id_sonido = ps.id_sonido
+                      WHERE ps.id_programa = $selectedPrograma";
+          } else {
+              echo "<p>No tenés programas asignados.</p>";
+              $sql = null;
+          }
+      } elseif ($tab == 'personales' && $rol !== 'productor') {
           $sql = "SELECT * FROM sonidos WHERE tipo='personal' AND propietario=$id_usuario";
+      } else {
+          // El productor solo ve institucionales
+          $sql = null;
+          if ($tab !== 'institucionales') {
+              echo "<p>No tenés permisos para acceder a esta sección.</p>";
+          }
       }
 
-      $result = $conn->query($sql);
+      if ($sql) {
+          $result = $conn->query($sql);
+          if ($result && $result->num_rows > 0) {
+              while ($s = $result->fetch_assoc()) {
+                  $id_sonido = (int)$s['id_sonido'];
+                  $nombre = htmlspecialchars($s['nombre']);
+                  $url = htmlspecialchars($s['url']);
 
-      if ($result && $result->num_rows > 0) {
-          while ($s = $result->fetch_assoc()) {
-              $nombre = htmlspecialchars($s['nombre']);
-              $url = htmlspecialchars($s['url']);
-              echo "<div class='sound-btn' data-sound='$url'>
-                      <span>🎵</span>$nombre
-                    </div>";
+                  echo "<div class='sound-btn' data-sound='$url'>
+                          <span>🎵</span>
+                          <div class='sound-name'>$nombre</div>";
+
+                  // Mostrar editar/eliminar según rol
+                  if ($rol == 'jefe' || ($rol == 'operador' && $tab !== 'institucionales')) {
+                      echo "<div class='sound-actions'>
+                              <a href='editar_sonido.php?id=$id_sonido' class='btn-icon edit' title='Editar'><i>✏️</i></a>
+                              <a href='eliminar_sonido.php?id=$id_sonido' class='btn-icon delete' title='Eliminar' onclick='return confirm(\"¿Seguro que querés eliminar este sonido?\")'><i>🗑️</i></a>
+                            </div>";
+                  }
+
+                  echo "</div>";
+              }
+          } else {
+              echo "<p>No hay sonidos disponibles en esta categoría.</p>";
           }
-      } else {
-          echo "<p>No hay sonidos disponibles en esta categoría.</p>";
       }
       ?>
     </div>
@@ -123,7 +176,7 @@ if ($rol == 'operador' || $rol == 'jefe') {
 </div>
 
 <script>
-  // manejar tabs con redirección
+  // manejar tabs
   const tabs = document.querySelectorAll('.tab');
   tabs.forEach(t => {
     t.addEventListener('click', () => {
@@ -132,46 +185,23 @@ if ($rol == 'operador' || $rol == 'jefe') {
     });
   });
 
-  // obtener pestaña activa desde PHP
   const activeTab = "<?php echo $tab; ?>";
+  if (activeTab === 'programa') document.getElementById('programa-bar').style.display = 'flex';
 
-  // asignar clase 'active'
-  tabs.forEach(t => {
-    if (t.getAttribute('data-tab') === activeTab) {
-      t.classList.add('active');
-    } else {
-      t.classList.remove('active');
-    }
-  });
-
-  // mostrar dropdown solo si la pestaña es 'programa'
-  if (activeTab === 'programa') {
-    document.getElementById('programa-bar').style.display = 'flex';
-  }
-
-  // ========================
-  // 🎧 REPRODUCCIÓN DE SONIDOS
-  // ========================
+  // Reproducción de sonidos 🎧
   let currentAudio = null;
-
   document.querySelectorAll('.sound-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const soundPath = btn.dataset.sound;
-
       if (!soundPath) return;
-
-      // si hay un audio sonando, lo detiene
       if (currentAudio && !currentAudio.paused) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
-        // si el mismo botón se clickea de nuevo, no arranca otro
         if (currentAudio.src.includes(soundPath)) {
           currentAudio = null;
           return;
         }
       }
-
-      // crear nuevo audio
       currentAudio = new Audio(soundPath);
       currentAudio.play().catch(err => console.error("Error al reproducir:", err));
     });

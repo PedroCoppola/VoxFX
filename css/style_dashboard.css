@@ -1,188 +1,128 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('style.css');
 
-@font-face {
-    font-family: 'Bicubik Regular';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Bicubik Regular'), url('../fonts/Bicubik.woff') format('woff');
-}
-
-body {
-    font-family: 'Roboto', sans-serif;
-    background: #000;
-    color: #fff;
-
-    text-align: center;
-    margin: 0;
-    background-color: radial-gradient(135deg, #1a1a1a, #000);
-}
-
-
-/* HEADER */
-header {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 1%;
-    background: linear-gradient(to right, #8e44ad, #3498db);
-    text-align: center;
-}
-
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.user-info span {
-    font-weight: 500;
-}
-
-.avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #fff;
-}
-
-/* CONTENEDOR PRINCIPAL */
+/* ====== DASHBOARD LAYOUT ====== */
 .container {
-    display: flex;
-    padding: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
 }
 
-/* LADO IZQUIERDO - BOTONES */
+/* ====== SIDEBAR ====== */
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 180px;
+  justify-content: center;
 }
 
 .sidebar button {
-    border: none;
-    border-radius: 40px;
-    padding: 17px 18px;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-    transition: transform 0.2s;
+  width: 100%;
 }
 
-.sidebar button:hover {
-    transform: scale(1.05);
-}
-
-.add-btn {
-    background: linear-gradient(to right, #ff7eb3, #ff758c);
-}
-
-.edit-btn {
-    background: linear-gradient(to right, #5dade2, #3498db);
-}
-
-.delete-btn {
-    background: linear-gradient(to right, #ff6a00, #ff3c00);
-}
-
-/* PANEL CENTRAL */
-.main-panel {
-    flex: 1;
-    background: #1e1e1e;
-    border-radius: 20px;
-    padding: 20px;
-}
-
-hr {
-    border: none;
-    border-top: 1px solid #333;
-    width: 100%;
-}
-
-/* TABS */
+/* ====== TABS ====== */
 .tabs {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #333;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #333;
 }
 
 .tab {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    font-weight: 500;
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
 }
 
 .tab.active {
-    border-bottom: 3px solid #8e44ad;
-    color: #8e44ad;
+  border-bottom: 3px solid #8e44ad;
+  color: #8e44ad;
 }
 
-/* BARRA SUPERIOR */
+/* ====== TOP BAR ====== */
 .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    vertical-align: middle;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  vertical-align: middle;
 }
 
 .dropdown,
 .search {
-    background: #2b2b2b;
-    border: 1px solid #444;
-    border-radius: 40px;
-    padding: 8px 15px;
-    color: #fff;
+  background: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 40px;
+  padding: 8px 15px;
+  width: 200px;
 }
 
-.dropdown {
-    width: 200px;
-}
-
-.search {
-    width: 200px;
-}
-
-/* GRID DE SONIDOS */
+/* ====== SOUND GRID ====== */
 .sound-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .sound-btn {
-    background: #2b2b2b;
-    border: 1px solid #444;
-    border-radius: 40px;
-    padding: 20px;
-    text-align: center;
-    font-size: 14px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+  background: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 40px;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
 }
 
 .sound-btn:hover {
-    background: #333;
-    transform: scale(1.05);
+  background: #333;
+  transform: scale(1.05);
 }
 
 .sound-btn span {
-    display: block;
-    font-size: 20px;
-    margin-bottom: 5px;
+  display: block;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.sound-btn {
+  position: relative;
+}
+
+.sound-name {
+  font-size: 14px;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+.sound-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-icon {
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-block;
+  border-radius: 50%;
+  padding: 6px;
+  transition: 0.2s;
+}
+
+.btn-icon.edit {
+  background: linear-gradient(to right, #5dade2, #3498db);
+}
+
+.btn-icon.delete {
+  background: linear-gradient(to right, #ff6a00, #ff3c00);
+}
+
+.btn-icon:hover {
+  transform: scale(1.15);
 }

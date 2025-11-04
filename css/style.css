@@ -1,246 +1,208 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 @font-face {
-    font-family: 'Bicubik Regular';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Bicubik Regular'), url('../fonts/Bicubik.woff') format('woff');
+  font-family: 'Bicubik Regular';
+  src: local('Bicubik Regular'), url('../fonts/Bicubik.woff') format('woff');
 }
 
-/* GLOBAL STYLES */
+/* ====== ESTILOS BASE ====== */
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    color: #fff;
-    background: radial-gradient(135deg, #1a1a1a, #000);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  font-family: 'Roboto', sans-serif;
+  background: #000;
+  color: #e7e7e7;
+  text-align: center;
 }
 
-/* HEADER */
+/* ====== HEADER ====== */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to right, #8e44ad, #3498db);
-    padding: 10px 20px;
-}
-
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.logo {
-    width: 100%;
-    font-size: 22px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    padding: 1% 0 0 0;
-    background: linear-gradient(to right, #8e44ad, #3498db);
-    text-align: center;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.user-info span {
-    font-weight: 500;
-}
-
-.avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #fff;
-}
-
-/* MAIN CONTAINER */
-.container {
-    display: flex;
-    padding: 20px;
-    width: 100%;
-    max-width: 1200px;
-    box-sizing: border-box;
-}
-
-/* SIDEBAR BUTTONS */
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-right: 20px;
-}
-
-.sidebar button {
-    border: none;
-    border-radius: 40px;
-    padding: 12px 18px;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.sidebar button:hover {
-    transform: scale(1.05);
-}
-
-.add-btn {
-    background: linear-gradient(to right, #ff7eb3, #ff758c);
-}
-
-.edit-btn {
-    background: linear-gradient(to right, #5dade2, #3498db);
-}
-
-.delete-btn {
-    background: linear-gradient(to right, #ff6a00, #ff3c00);
-}
-
-/* MAIN PANEL */
-.main-panel {
-    flex: 1;
-    background: #1e1e1e;
-    border-radius: 20px;
-    padding: 20px;
-}
-
-/* TABS */
-.tabs {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #333;
-}
-
-.tab {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.tab.active {
-    border-bottom: 3px solid #8e44ad;
-    color: #8e44ad;
-}
-
-/* TOP BAR */
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.dropdown, .search {
-    background: #2b2b2b;
-    border: 1px solid #444;
-    border-radius: 40px;
-    padding: 8px 15px;
-    color: #fff;
-}
-
-.dropdown, .search {
-    width: 200px;
-}
-
-/* SOUND GRID */
-.sound-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-}
-
-.sound-btn {
-    background: #2b2b2b;
-    border: 1px solid #444;
-    border-radius: 40px;
-    padding: 20px;
-    text-align: center;
-    font-size: 14px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
-}
-
-.sound-btn:hover {
-    background: #333;
-    transform: scale(1.05);
-}
-
-.sound-btn span {
-    display: block;
-    font-size: 20px;
-    margin-bottom: 5px;
-}
-
-/* FORM STYLES */
-form {
-    background: #1e1e1e;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    padding: 2%;
-    border: 1px solid #333;
-    width: 30%;
-    min-width: 300px;
-    max-width: 400px;
-    margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(to right, #8e44ad, #3498db);
 }
 
 h2 {
-    font-size: 2em;
-    margin: 1em;
-    color: #fff;
+    margin: 20px;
 }
 
-.input-group {
-    margin-bottom: 15px;
+.logo {
+  font-family: 'Bicubik Regular', sans-serif;
+  font-size: 24px;
+  letter-spacing: 1px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-    width: 100%;
-    padding: 15px;
-    background: #2b2b2b;
-    border: 1px solid #444;
-    border-radius: 40px;
-    color: #fff;
-    font-size: 1em;
-    box-sizing: border-box;
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
 }
 
-input::placeholder {
-    color: #888;
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.login-btn {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 40px;
-    background: linear-gradient(to right, #8e44ad, #3498db);
-    color: #fff;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
+.user-info span {
+  font-weight: 500;
 }
 
-.login-btn:hover {
-    background: linear-gradient(to right, #9b59b6, #5dade2);
+.user-info small {
+  font-size: 0.9em;
+  color: #ddd;
 }
 
-.error-msg {
-    color: #e74c3c;
-    margin-top: 15px;
-    font-size: 0.9em;
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* ====== CONTENEDORES ====== */
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  vertical-align: middle;
+  
+}
+
+.main-panel {
+  flex: 1;
+
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 25px;
+  color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    height: auto;
+}
+
+/* ====== INPUTS Y FORMULARIOS ====== */
+input, textarea, select {
+  width: 100%;
+  background: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 40px;
+  color: #fff;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  font-size: 15px;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #888;
+}
+
+/* ====== BOTONES ====== */
+button, .btn {
+  border: none;
+  border-radius: 40px;
+  padding: 12px 25px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+button:hover, .btn:hover {
+  transform: scale(1.05);
+}
+
+.add-btn {
+  background: linear-gradient(to right, #ff7eb3, #ff758c);
+}
+
+.edit-btn {
+  background: linear-gradient(to right, #5dade2, #3498db);
+}
+
+.delete-btn {
+  background: linear-gradient(to right, #ff6a00, #ff3c00);
+}
+
+.btn-del {
+  background: linear-gradient(to right, #ff6a00, #ff3c00);
+}
+
+.btn-save {
+  background: linear-gradient(to right, #5dade2, #3498db);}
+
+.manage-btn {
+  background: linear-gradient(to right, #9b59b6, #8e44ad);
+}
+
+.btn-add {
+  background: linear-gradient(to right, #8e44ad, #3498db);
+}
+
+.btn-cancel {
+  background: linear-gradient(to right, #ff4e50, #f9d423);
+}
+
+/* ====== TABLAS ====== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+th {
+  background: linear-gradient(90deg, #8e44ad, #3498db);
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+tr:hover {
+  background: #2b2b2b;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #333;
+  width: 100%;
+}
+
+/* ====== UTILIDADES ====== */
+.msg {
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.msg-empty {
+  text-align: center;
+  padding: 30px;
+  color: #888;
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    
 }

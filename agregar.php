@@ -1,9 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: index.php");
-    exit();
-}
+require_once("php/permisos.php");
+
 
 include("php/conexion.php");
 
@@ -76,7 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <header>
-  <div class="menu-icon">≡</div>
   <div class="logo">VOXFX</div>
   <div class="user-info">
     <span><?php echo htmlspecialchars($username); ?></span>
