@@ -20,8 +20,8 @@ $permisos = [
     'jefe' => [
         'permitidas' => [
             'dashboard.php', 'usuarios.php', 'editar_usuario.php', 'programas.php',
-            'asignar_programas.php', 'agregar.php', 'editar_sonido.php',
-            'eliminar_sonido.php', 'cambiar_contrasena.php', 'logout.php'
+            'asignar_programas.php', 'editar_programa.php', 'agregar.php', 'editar_sonido.php',
+            'eliminar_sonido.php', 'cambiar_contrasena.php', 'logout.php', 'registro_usuarios.php'
         ]
     ],
     'operador' => [

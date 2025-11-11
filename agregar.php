@@ -118,7 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <!-- Nombre e icono -->
       <div style="display:flex; justify-content:space-between; gap:20px; margin-bottom:20px;">
         <input type="text" name="nombre_sonido" placeholder="Nombre del sonido" class="dropdown" required>
-        <input type="text" name="icono_sonido" placeholder="Icono del sonido (ej: 🎮)" class="dropdown">
       </div>
 
       <!-- Archivo -->
